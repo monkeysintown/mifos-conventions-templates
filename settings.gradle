@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral().content {
+            excludeModule("javax.media", "jai_core")
+        }
+        gradlePluginPortal()
+        maven {
+            url = uri("https://central.sonatype.com/repository/maven-snapshots")
+        }
+        maven {
+            url = uri("https://mifos.jfrog.io/artifactory/mifosx-gradle-local")
+        }
+    }
+
+    dependencies {
+        classpath "org.mifos.conventions.gradle:mifos-conventions-gradle-base-java:0.1.0-SNAPSHOT"
+        classpath "org.mifos.conventions.gradle:mifos-conventions-gradle-template:0.1.0-SNAPSHOT"
+    }
+}
+
+apply plugin: "org.mifos.conventions.gradle.base.layout"
+
+rootProject.name = "mifos-conventions-templates"
+
+mifos {
+    project {
+        groupId = "org.mifos.conventions.templates"
+        description = "Mifos Conventions Templates"
+        basePackage = "org.mifos.conventions.templates"
+        inceptionYear = "2026"
+    }
+    developers {
+        "vidakovic" {
+            firstname = "Aleksandar"
+            lastname = "Vidakovic"
+            email = "aleks@mifos.org"
+            timezone = "UTC+2"
+            roles = ["developer", "architect"]
+        }
+    }
+}
+
+include(":mifos-conventions-templates-project")
+project(":mifos-conventions-templates-project").projectDir = file("${rootDir}/modules/templates/project")
+// include(":mifos-conventions-templates-java")
+// project(":mifos-conventions-templates-java").projectDir = file("${rootDir}/modules/templates/java")
+// include(":mifos-conventions-templates-boot")
+// project(":mifos-conventions-templates-boot").projectDir = file("${rootDir}/modules/templates/boot")
+// include(":mifos-conventions-templates-doc")
+// project(":mifos-conventions-templates-doc").projectDir = file("${rootDir}/modules/templates/doc")

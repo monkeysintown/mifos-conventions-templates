@@ -1,0 +1,57 @@
+#
+# This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
+# distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+project:
+  name: "{{projectName}}"
+  version: "0.1.0-SNAPSHOT"
+  license: "{{projectLicense}}"
+  inceptionYear: "{{projectInceptionYear}}"
+  vendor: "{{projectVendor}}"
+  copyright: "Copyright (c) {{projectInceptionYear}} {{projectVendor}}"
+  authors:
+    - "{{developerFirstname}} {{developerLastname}}"
+  links:
+    bugTracker: "https://mifosforge.jira.com"
+    contribute: "https://mifos.org"
+    documentation: "https://docs.mifos.org"
+    donation: "https://mifos.org/take-action/donation-options"
+    faq: "https://mifos.org/resources/support"
+    contact: "https://mifos.org/about-us/contact-us"
+
+signing:
+  pgp:
+    active: ALWAYS
+    armored: true
+
+catalog:
+  sbom:
+    syft:
+      active: ALWAYS
+  swid:
+    mifos:
+      active: ALWAYS
+
+release:
+  github:
+    enabled: true
+    owner: "openmf"
+    tagName: v{{ "{{" }} projectVersion {{ "}}" }}
+    overwrite: true
+    commitAuthor:
+      name: "{{developerFirstname}} {{developerLastname}}"
+      email: "{{developerEmail}}"
+
+deploy:
+  maven:
+    artifactory:
+      mifos:
+        active: ALWAYS
+        url: "https://mifos.jfrog.io/artifactory/mifosx-gradle-local"
+        authorization: BEARER
+        snapshotSupported: true
+        applyMavenCentralRules: false
+        stagingRepositories:
+          # TODO: adapt to your project!
+          # - "modules/xxx/core/build/staging-deploy"
