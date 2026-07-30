@@ -1,0 +1,46 @@
+plugins {
+    id "base"
+    id "pl.allegro.tech.build.axion-release"
+}
+
+description = "Mifos Initiative - Conventions - Gradle"
+group = "org.mifos.conventions.templates"
+
+scmVersion {
+    tag {
+        prefix = "v"
+        versionSeparator = ""
+    }
+    nextVersion {
+        suffix = "alpha"
+        separator = "-"
+    }
+
+    branchVersionIncrementer = [
+            "main": { context ->
+                context.currentVersion
+            },
+            "dev": { context ->
+                "${context.currentVersion}-SNAPSHOT"
+            },
+            "alpha/.*": { context ->
+                "${context.currentVersion}-alpha.${context.scmPosition.distance}"
+            },
+            "beta/.*": { context ->
+                "${context.currentVersion}-beta.${context.scmPosition.distance}"
+            },
+            "rc/.*": { context ->
+                "${context.currentVersion}-rc.${context.scmPosition.distance}"
+            }
+    ]
+
+    checks {
+        uncommittedChanges = true
+        aheadOfRemote = true
+        snapshotDependencies = true
+    }
+
+    localOnly = false
+}
+
+version = scmVersion.version
